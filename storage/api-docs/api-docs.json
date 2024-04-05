@@ -1,0 +1,280 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "INVENTARIO APP",
+        "description": "Descripción de tu API",
+        "contact": {
+            "name": "Julian Mora",
+            "email": "contacto@ejemplo.com"
+        },
+        "license": {
+            "name": "Licencia de Uso",
+            "url": "https://www.ejemplo.com/licencia"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/movements": {
+            "get": {
+                "tags": [
+                    "Movements"
+                ],
+                "summary": "Listar todos los movimientos",
+                "operationId": "12b7c3a98a31664a27f614325987684e",
+                "responses": {
+                    "200": {
+                        "description": "Listado de movimientos"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Movements"
+                ],
+                "summary": "Crear un movimiento de inventario",
+                "operationId": "9d84e9d5ed2d562b43ed79402fe3eb5e",
+                "requestBody": {
+                    "description": "Datos del movimiento",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "product_id",
+                                    "stock_status_id",
+                                    "quantity"
+                                ],
+                                "properties": {
+                                    "product_id": {
+                                        "description": "ID del producto",
+                                        "type": "integer"
+                                    },
+                                    "stock_status_id": {
+                                        "description": "ID del estado de stock",
+                                        "type": "integer"
+                                    },
+                                    "quantity": {
+                                        "description": "Cantidad del movimiento",
+                                        "type": "integer"
+                                    },
+                                    "date_movement": {
+                                        "description": "Fecha del movimiento en formato YYYY-MM-DD",
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Movimiento creado exitosamente"
+                    },
+                    "400": {
+                        "description": "La cantidad solicitada es mayor a la disponible o falta algún dato requerido en la solicitud"
+                    },
+                    "404": {
+                        "description": "Producto o estado de stock no encontrado"
+                    },
+                    "500": {
+                        "description": "Ha ocurrido un error al crear el producto"
+                    }
+                }
+            }
+        },
+        "/api/movements/lists": {
+            "get": {
+                "tags": [
+                    "Movements"
+                ],
+                "summary": "Listas de movimientos",
+                "operationId": "d462f0e4146002cc6800fff1f1d672ed",
+                "responses": {
+                    "200": {
+                        "description": "Listas para crear el movimiento"
+                    }
+                }
+            }
+        },
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Listar todos los productos",
+                "operationId": "1bfaa78d1c2c3848ab8165c5dadcad3e",
+                "responses": {
+                    "200": {
+                        "description": "Listado de productos"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Crear un nuevo producto",
+                "operationId": "e8185e307706e2cd84bbcf5171e2f09d",
+                "requestBody": {
+                    "description": "Datos del nuevo producto",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "description",
+                                    "quantity"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "0001"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Descripción del producto"
+                                    },
+                                    "quantity": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Producto creado exitosamente"
+                    }
+                }
+            }
+        },
+        "/api/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Obtener un producto por su ID",
+                "operationId": "7ab21ddb713501f3d4c2914892c02a21",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del producto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto encontrado"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Actualizar un producto por su ID",
+                "operationId": "6a7e11900844cd85cff66e662b82bd4c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del producto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos actualizados del producto",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "description",
+                                    "quantity"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "0003"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Nueva descripción del producto"
+                                    },
+                                    "quantity": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Producto actualizado exitosamente"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Eliminar un producto por su ID",
+                "operationId": "e80a6ca46716acee6b47ea1ac91663c0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del producto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Producto eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Producto no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Movements",
+            "description": "Endpoints para movimientos"
+        },
+        {
+            "name": "Products",
+            "description": "Endpoints para productos"
+        }
+    ]
+}
